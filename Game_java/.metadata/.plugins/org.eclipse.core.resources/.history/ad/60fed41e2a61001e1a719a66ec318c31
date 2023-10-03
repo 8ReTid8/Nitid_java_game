@@ -1,0 +1,44 @@
+package monster;
+
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import entity.Entity;
+import main.GamePanel;
+
+public class MON_Piramid extends Entity{
+	
+	GamePanel gp;
+	
+
+	public MON_Piramid(GamePanel gp) {
+		this.gp = gp;
+		speed = 1;
+		
+		solidArea.x = 3;
+		solidArea.y = 18;
+		solidArea.width = 42;
+		solidArea.height = 30;
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
+		getImage();
+	}
+	public void getImage() {
+		try {
+			walkL1 = ImageIO.read(getClass().getResourceAsStream("/monster/enemy1.png"));
+			walkL2 = ImageIO.read(getClass().getResourceAsStream("/monster/enemy2.png"));
+			walkL3 = ImageIO.read(getClass().getResourceAsStream("/monster/enemy3.png"));
+			walkL4 = ImageIO.read(getClass().getResourceAsStream("/monster/enemy4.png"));
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void setAction() {
+		actioncounter ++;
+		if(actioncounter==60) {
+			
+		}
+	}
+}

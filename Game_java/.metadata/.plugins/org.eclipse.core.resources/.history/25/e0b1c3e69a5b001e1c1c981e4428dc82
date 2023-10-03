@@ -1,0 +1,28 @@
+package object;
+
+import java.io.IOException;
+import java.util.Random;
+import javax.imageio.ImageIO;
+
+import main.GamePanel;
+
+public class OBJ_Key extends SuperObject{
+	Random random;
+	GamePanel gp;
+	public OBJ_Key(GamePanel gp) {
+		this.gp = gp;
+		random = new Random();
+		name = "Key";
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream("/objects/star16.png"));
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		setkey();
+	}
+	public void setkey() {
+		gp.obj[0].image = image; 
+		gp.obj[0].worldX = (1 + random.nextInt((int)(gp.maxscreencol - 2)))*gp.tilesize;  // Random x coordinate between 1 and gp.maxscreencol-2
+		gp.obj[0].worldY = (1 + random.nextInt((int)(gp.maxscreenrow - 2)))*gp.tilesize;	// Random y coordinate between 1 and gp.maxscreenrow-2
+	}
+}

@@ -1,0 +1,19 @@
+package main;
+import java.util.Random;
+import object.OBJ_Key;
+public class AssetSetter {
+	
+	GamePanel gp;
+	Random random; 
+	public AssetSetter(GamePanel gp) {
+		this.gp = gp;
+		random = new Random();
+	}
+	
+	public void setObject() {
+		gp.obj[0] = new OBJ_Key();
+		gp.obj[0].worldX = random.nextInt((int)((gp.screenwidth-2)/gp.tilesize))*gp.tilesize;
+		gp.obj[0].worldY = random.nextInt((int)((gp.screenheight-2)/gp.tilesize))*gp.tilesize;
+	}
+	
+}
