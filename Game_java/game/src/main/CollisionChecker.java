@@ -154,20 +154,20 @@ public class CollisionChecker {
 		
 			entity.solidArea.x = entity.x + entity.solidArea.x;
 			entity.solidArea.y = entity.y + entity.solidArea.y;
-			gp.mon.solidArea.x = gp.mon.x + gp.mon.solidArea.x;
-			gp.mon.solidArea.y = gp.mon.y + gp.mon.solidArea.y;
+			gp.player.solidArea.x = gp.player.x + gp.player.solidArea.x;
+			gp.player.solidArea.y = gp.player.y + gp.player.solidArea.y;
 			
-			if(entity.solidArea.intersects(gp.mon.solidArea)) {
+			if(entity.solidArea.intersects(gp.player.solidArea)) {
 				entity.solidArea.x = entity.solidAreaDefaultX;
 				entity.solidArea.y = entity.solidAreaDefaultY;
-				gp.mon.solidArea.x = gp.mon.solidAreaDefaultX;
-				gp.mon.solidArea.y = gp.mon.solidAreaDefaultY;
+				gp.player.solidArea.x = gp.player.solidAreaDefaultX;
+				gp.player.solidArea.y = gp.player.solidAreaDefaultY;
 				return true;
 			}
 			entity.solidArea.x = entity.solidAreaDefaultX;
 			entity.solidArea.y = entity.solidAreaDefaultY;
-			gp.mon.solidArea.x = gp.mon.solidAreaDefaultX;
-			gp.mon.solidArea.y = gp.mon.solidAreaDefaultY;
+			gp.player.solidArea.x = gp.player.solidAreaDefaultX;
+			gp.player.solidArea.y = gp.player.solidAreaDefaultY;
 			
 		
 		return false;

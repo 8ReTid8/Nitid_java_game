@@ -1,0 +1,201 @@
+package entity;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import main.GamePanel;
+import main.KeyHandler;
+import static util.constant.Confix.*;
+public class Player extends Entity{
+	
+	GamePanel gp;
+	KeyHandler keyH;
+	public int hasStar = 0;
+	
+	public Player(GamePanel gp,KeyHandler keyH) {
+		this.gp = gp;
+		this.keyH = keyH;
+		solidArea = new Rectangle();
+		solidArea.x = 24;
+		solidArea.y = 32;
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
+		solidArea.width = 16;
+		solidArea.height = 16;
+		setDefaultValues();
+		getPlayerImage();
+	}
+	private void drawHitbox(Graphics2D g) {
+        g.setColor(Color.RED);
+        g.drawRect(x + (int) solidArea.x, y + (int) solidArea.y, (int) solidArea.width, (int) solidArea.height);
+    }
+	public void setDefaultValues() {
+		x = screenwidth/2;
+		y = screenheight/2;
+		speed = 4;
+		direction = "stayR";
+		imagedirection = "stayR";
+	}
+	public void getPlayerImage() {
+		try {
+			
+			stayR = ImageIO.read(getClass().getResourceAsStream("/player/stayright.png"));
+			stayL = ImageIO.read(getClass().getResourceAsStream("/player/playerStay.png"));
+			walkL1 = ImageIO.read(getClass().getResourceAsStream("/player/playerWalkleft1.png"));
+			walkL2 = ImageIO.read(getClass().getResourceAsStream("/player/playerWalkleft2.png"));
+			walkL3 = ImageIO.read(getClass().getResourceAsStream("/player/playerWalkleft3.png"));
+			walkL4 = ImageIO.read(getClass().getResourceAsStream("/player/playerWalkleft4.png"));
+			walkR1 = ImageIO.read(getClass().getResourceAsStream("/player/playerWalkright1.png"));
+			walkR2 = ImageIO.read(getClass().getResourceAsStream("/player/playerWalkright2.png"));
+			walkR3 = ImageIO.read(getClass().getResourceAsStream("/player/playerWalkright3.png"));
+			walkR4 = ImageIO.read(getClass().getResourceAsStream("/player/playerWalkright4.png"));
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void update() {
+		int X=0;
+		int Y=0;
+		if(keyH.upPressed == true || keyH.downPressed == true || 
+				keyH.leftPressed == true || keyH.rightPressed == true) {
+			if(keyH.upPressed == true) {
+				direction = "up";
+				Y -= speed;
+				if(imagedirection=="stayL") {
+					imagedirection = "left";
+				}
+				if(imagedirection=="stayR") {
+					imagedirection = "right";
+				}
+				
+			}
+			if(keyH.downPressed == true) {
+				direction = "down";
+				Y += speed;
+				if(imagedirection=="stayL") {
+					imagedirection = "left";
+				}
+				if(imagedirection=="stayR") {
+					imagedirection = "right";
+				}
+				
+			}
+			if(keyH.leftPressed == true) {
+				direction = "left";
+				X -= speed;
+				imagedirection = "left";
+				
+			}
+			if(keyH.rightPressed == true) {
+				direction = "right";
+				X += speed;
+				imagedirection = "right";
+				
+			}
+			if(keyH.shiftPressed == true) {
+				speed=7;
+			}
+			if(keyH.shiftPressed == false) {
+				speed=4;
+			}
+			
+			
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+			boolean objBool = gp.cChecker.checkObject(this,true);
+//			boolean objmon = gp.cChecker.checkEntity(this,true);
+//			if(objmon) {
+//				System.out.println("gay");
+//			}
+			if(objBool) {
+				pickStar();
+			}
+			//if collision is false can move
+			if(collisionOn == false) {
+				x += X;
+				y += Y;
+			}
+			
+			spriteCounter++;
+			if(spriteCounter > 10) {
+				if(spriteNum == 1) {
+					spriteNum++;
+				}
+				else if(spriteNum == 2) {
+					spriteNum++;
+				}
+				else if(spriteNum == 3) {
+					spriteNum++;
+				}
+				else if(spriteNum == 4) {
+					spriteNum = 1;
+				}
+//				System.out.println(spriteNum);
+				spriteCounter = 0;
+			}
+		}
+		else {
+			if(imagedirection=="left"||imagedirection=="up") {
+				imagedirection = "stayL";
+			}
+			if(imagedirection=="right"||imagedirection=="down") {
+				imagedirection = "stayR";
+			}
+		}
+		
+	}
+	
+	public void pickStar() {
+			hasStar++;
+			gp.obj = null;
+			System.out.println(hasStar);	
+	}
+	
+	public void draw(Graphics2D g2) {
+		
+		BufferedImage image = null;
+		
+		switch(imagedirection) {
+		case "left":
+			if(spriteNum == 1) {
+				image = walkL1;
+			}
+			if(spriteNum == 2) {
+				image = walkL2;
+			}
+			if(spriteNum == 3) {
+				image = walkL3;
+			}
+			if(spriteNum == 4) {
+				image = walkL4;
+			}
+			break;
+		case "right":
+			if(spriteNum == 1) {
+				image = walkR1;
+			}
+			if(spriteNum == 2) {
+				image = walkR2;
+			}
+			if(spriteNum == 3) {
+				image = walkR3;
+			}
+			if(spriteNum == 4) {
+				image = walkR4;
+			}
+			break;
+		case "stayR":
+			image = stayR;
+			break;
+		case "stayL":
+			image = stayL;
+			break;
+		}
+		g2.drawImage(image,x,y,tilesize,tilesize,null);
+		drawHitbox(g2);
+	}
+}

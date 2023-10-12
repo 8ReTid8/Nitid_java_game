@@ -1,5 +1,6 @@
 package main;
 
+
 import java.awt.Color;
 import java.io.File;
 import java.awt.Font;
@@ -20,8 +21,6 @@ public class UI {
 	int x;
 	BufferedImage starImage;
 	public int commandNum = 0;
-//	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-//	Font customFont = Font.createFont(Font.TRUETYPE_FONT, new java.io.File("/font/Silkscreen-Regular.ttf"));
 	
 	public UI(GamePanel gp) {
 		this.gp = gp;
@@ -42,13 +41,51 @@ public class UI {
 		if(gp.gamestate == gp.titlestate) {
 			drawTitlescreen();
 		}
-		else {
+		if(gp.gamestate == gp.deadstate) {
+			drawDeadscreen();
+		}
+		if(gp.gamestate == gp.playstate){
 			drawstarcout();
 		}	
 	}
 	public void drawstarcout() {
 		g2.drawImage(starImage, gp.tilesize/2, gp.tilesize/8, gp.tilesize-12, gp.tilesize-12, null);
 		g2.drawString(":"+gp.player.hasStar,110-24,42);
+	}
+	public void drawDeadscreen() {
+		g2.setColor(new Color(0, 0, 0, 125));
+		g2.fillRect(0,0,gp.screenwidth,gp.screenheight);
+		g2.setFont(g2.getFont().deriveFont(64f));
+		g2.setColor(Color.white);
+		String text = "GAME OVER";
+		x = getXcenter(text);
+		g2.drawString(text, x, gp.screenheight/3);
+		
+		
+		g2.setFont(g2.getFont().deriveFont(40f));
+		//score
+		text = "SCORE";
+		x = getXcenter(text);
+		g2.drawString(text,x, gp.screenheight/3+70);
+		text = ""+gp.player.hasStar;
+		x = getXcenter(text);
+		g2.drawString(text,x, gp.screenheight/3+120);
+		
+		//choice
+		text = "restart";
+		x = getXcenter(text);
+		g2.drawString(text,x,gp.screenheight/2+70);
+		if(commandNum == 0) {
+			g2.drawString("?",x-gp.tilesize,gp.screenheight/2+70);
+		}
+		text = "exit";
+		x = getXcenter(text);
+		g2.drawString(text,x,gp.screenheight/2+140);
+		if(commandNum == 1) {
+			g2.drawString("?",x-gp.tilesize,gp.screenheight/2+140);
+		}
+		
+		
 	}
 	public void drawTitlescreen() {
 		g2.setFont(g2.getFont().deriveFont(64f));

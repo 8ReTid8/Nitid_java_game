@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 public class Entity  {
@@ -14,6 +15,8 @@ public class Entity  {
 	public int spriteNum = 1;
 	public int actioncounter = 0;
 	public Rectangle solidArea;
+	public Ellipse2D oval;
+
 	public int solidAreaDefaultX,solidAreaDefaultY;
 	public boolean collisionOn = false;
 	
