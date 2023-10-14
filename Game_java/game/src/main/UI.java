@@ -94,22 +94,23 @@ public class UI {
 		x = getXcenter(text);
 		g2.drawString(text, x, 70);
 		
+		g2.drawImage(gp.player.titlepict,320,100,gp.tilesize*6,gp.tilesize*6,null);
 		
 		g2.setFont(g2.getFont().deriveFont(40f));
 		//start
 		text = "start";
 		x = getXcenter(text);
-		g2.drawString(text,x, 150);
+		g2.drawString(text,x, 520);
 		if(commandNum == 0) {
-			g2.drawString("?",x-gp.tilesize,150);
+			g2.drawString("?",x-gp.tilesize,520);
 		}
 		
 		//exit
 		text = "exit";
 		x = getXcenter(text);
-		g2.drawString(text,x, 200);
+		g2.drawString(text,x, 570);
 		if(commandNum == 1) {
-			g2.drawString("?",x-gp.tilesize,200);
+			g2.drawString("?",x-gp.tilesize,570);
 		}
 	}
 	public int getXcenter(String text) {

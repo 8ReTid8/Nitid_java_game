@@ -22,7 +22,7 @@ public class Player extends Entity{
 		this.keyH = keyH;
 		solidArea = new Rectangle();
 		solidArea.x = 24;
-		solidArea.y = 32;
+		solidArea.y = 28;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		solidArea.width = 16;
@@ -37,13 +37,12 @@ public class Player extends Entity{
 	public void setDefaultValues() {
 		x = screenwidth/2;
 		y = screenheight/2;
-		speed = 10;
+		speed = 6;
 		direction = "stayR";
 		imagedirection = "stayR";
 	}
 	public void getPlayerImage() {
-		try {
-			
+		try {	
 			stayR = ImageIO.read(getClass().getResourceAsStream("/player/stayright.png"));
 			stayL = ImageIO.read(getClass().getResourceAsStream("/player/playerStay.png"));
 			walkL1 = ImageIO.read(getClass().getResourceAsStream("/player/playerWalkleft1.png"));
@@ -54,6 +53,7 @@ public class Player extends Entity{
 			walkR2 = ImageIO.read(getClass().getResourceAsStream("/player/playerWalkright2.png"));
 			walkR3 = ImageIO.read(getClass().getResourceAsStream("/player/playerWalkright3.png"));
 			walkR4 = ImageIO.read(getClass().getResourceAsStream("/player/playerWalkright4.png"));
+			titlepict = ImageIO.read(getClass().getResourceAsStream("/player/boss.png"));
 			
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -108,25 +108,22 @@ public class Player extends Entity{
 			if (keyH.shiftPressed && !isDashing && (System.currentTimeMillis() - lastDashTime) >= dashCooldown) {
 	            isDashing = true;
 	            lastDashTime = System.currentTimeMillis();
-	            speed = 20; // Set a higher speed for dashing
+	            speed = 10; // Set a higher speed for dashing
 	        } else {
 	            if (!isDashing) {
-	                speed = 10; // Set the regular speed
+	                speed = 6; // Set the regular speed
 	            }
 	        }
 
 	        if (isDashing && (System.currentTimeMillis() - lastDashTime) >= dashCooldown) {
 	            isDashing = false;
-	            speed = 10; // Reset the speed after dashing cooldown
+	            speed = 6; // Reset the speed after dashing cooldown
 	        }
 			
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
 			boolean objBool = gp.cChecker.checkObject(this,true);
-//			boolean objmon = gp.cChecker.checkEntity(this,true);
-//			if(objmon) {
-//				System.out.println("gay");
-//			}
+			
 			if(objBool) {
 				pickStar();
 			}

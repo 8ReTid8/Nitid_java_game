@@ -1,0 +1,121 @@
+package monster;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Random;
+
+import javax.imageio.ImageIO;
+
+import entity.Entity;
+import entity.Player;
+import main.GamePanel;
+
+public class MON_Square extends Entity {
+	GamePanel gp;
+	Player player;
+	Random random;
+	private long lastTeleportTime;
+	private long teleportDelay = 2000;
+	public MON_Square(GamePanel gp,Player player) {
+		this.gp = gp;
+		this.player = player;
+		random = new Random();
+		speed = 1;
+		solidArea = new Rectangle();
+		solidArea.x = 32;
+		solidArea.y = 0;
+		solidArea.width = 35;
+		solidArea.height = 64;
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
+		lastTeleportTime = System.currentTimeMillis();
+		getImage();
+		setDefaultValues();
+	}
+	private void drawHitbox(Graphics2D g) {
+        g.setColor(Color.RED);
+        g.drawRect(x + (int) solidArea.x, y + (int) solidArea.y, (int) solidArea.width, (int) solidArea.height);
+    }
+	public void setDefaultValues() {
+		x = (1*gp.tilesize);
+		y = (1*gp.tilesize);
+		speed = 3;
+		imagedirection = "move";
+	}
+	public void getImage() {
+		try {
+			walkL1 = ImageIO.read(getClass().getResourceAsStream("/monster/enemyS1.png"));
+			walkL2 = ImageIO.read(getClass().getResourceAsStream("/monster/enemyS2.png"));
+			walkL3 = ImageIO.read(getClass().getResourceAsStream("/monster/enemyS3.png"));
+			walkL4 = ImageIO.read(getClass().getResourceAsStream("/monster/enemyS4.png"));
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void update() {
+		long currentTime = System.currentTimeMillis();
+//	    x = (1+random.nextInt((int)(gp.maxscreencol - 2)))*gp.tilesize;
+//	    y = (1+random.nextInt((int)(gp.maxscreenrow - 2)))*gp.tilesize;
+		if (currentTime - lastTeleportTime >= teleportDelay) {
+            // Teleport to a random position on the map
+            x = (1 + random.nextInt((int) (gp.maxscreencol - 2))) * gp.tilesize;
+            y = (1 + random.nextInt((int) (gp.maxscreenrow - 2))) * gp.tilesize;
+
+            // Update the last teleport time
+            lastTeleportTime = currentTime;
+        }
+		collisionOn = false;
+//		gp.cChecker.checkTile(this);
+		boolean objmon = gp.cChecker.checkEntity(this,true);
+		if(objmon) {
+			gp.gamestate = gp.deadstate; 
+			System.out.println("oh");
+		}	
+			
+		spriteCounter++;
+			if(spriteCounter > 8) {
+				if(spriteNum == 1) {
+					spriteNum++;
+				}
+				else if(spriteNum == 2) {
+					spriteNum++;
+				}
+				else if(spriteNum == 3) {
+					spriteNum++;
+				}
+				else if(spriteNum == 4) {
+					spriteNum = 1;
+				}
+				spriteCounter = 0;
+			}
+	
+	}
+	public void draw(Graphics2D g2) {
+		BufferedImage image = null;
+		
+		switch(imagedirection) {
+		case "move":
+			if(spriteNum == 1) {
+				image = walkL1;
+			}
+			if(spriteNum == 2) {
+				image = walkL2;
+			}
+			if(spriteNum == 3) {
+				image = walkL3;
+			}
+			if(spriteNum == 4) {
+				image = walkL4;
+			}
+			break;
+		}
+		g2.drawImage(image,x,y,gp.tilesize*2,gp.tilesize*2,null);
+		drawHitbox(g2);
+	}
+}
+
