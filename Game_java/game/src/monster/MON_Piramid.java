@@ -39,7 +39,7 @@ public class MON_Piramid extends Entity{
 	public void setDefaultValues() {
 		x = (1*gp.tilesize);
 		y = (1*gp.tilesize);
-		speed = 3;
+		speed = 2;
 		imagedirection = "move";
 	}
 	public void getImage() {
@@ -116,6 +116,6 @@ public class MON_Piramid extends Entity{
 			break;
 		}
 		g2.drawImage(image,x,y,gp.tilesize,gp.tilesize,null);
-		drawHitbox(g2);
+//		drawHitbox(g2);
 	}
 }

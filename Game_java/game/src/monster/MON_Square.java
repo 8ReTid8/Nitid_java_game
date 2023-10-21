@@ -130,6 +130,6 @@ public class MON_Square extends Entity{
 			break;
 		}
 		g2.drawImage(image,x,y,gp.tilesize,gp.tilesize,null);
-		drawHitbox(g2);
+//		drawHitbox(g2);
 	}
 }

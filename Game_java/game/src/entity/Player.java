@@ -123,7 +123,6 @@ public class Player extends Entity{
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
 			boolean objBool = gp.cChecker.checkObject(this,true);
-			
 			if(objBool) {
 				pickStar();
 			}
@@ -147,7 +146,6 @@ public class Player extends Entity{
 				else if(spriteNum == 4) {
 					spriteNum = 1;
 				}
-//				System.out.println(spriteNum);
 				spriteCounter = 0;
 			}
 		}
@@ -209,6 +207,6 @@ public class Player extends Entity{
 			break;
 		}
 		g2.drawImage(image,x,y,tilesize,tilesize,null);
-		drawHitbox(g2);
+//		drawHitbox(g2);
 	}
 }

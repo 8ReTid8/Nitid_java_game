@@ -56,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
 	}
+	
 	public void setRestart() {
 		player = new Player(this,keyH);
 		mon = new MON_Piramid(this,player);
@@ -64,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
 		mon4 = new MON_Square(this,player,obj);
 		obj = new OBJ_Key(this);
 	}
+	
 	public void setupGame(){
 		gamestate = titlestate;
 	}
@@ -173,6 +175,12 @@ public class GamePanel extends JPanel implements Runnable{
 		}
 		else {
 			//tile
+			if(player.hasStar>=20) {
+				tileM.loadMap("/maps/map2.txt");
+			}
+			if(player.hasStar<20) {
+				tileM.loadMap("/maps/map.txt");
+			}
 			tileM.draw(g2);
 			//object
 			if(obj!=null) {
@@ -198,13 +206,6 @@ public class GamePanel extends JPanel implements Runnable{
 			//ui
 			ui.draw(g2);
 		}
-		
-		//object
-//		for(int i = 0;i<obj.length;i++) {
-//			if(obj[i]!=null) {
-//				obj[i].draw(g2,this);
-//			}
-//		}
 		
 		g2.dispose();
 	}

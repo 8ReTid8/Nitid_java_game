@@ -117,7 +117,7 @@ public class MON_Kite extends Entity {
 			break;
 		}
 		g2.drawImage(image,x,y,gp.tilesize+16,gp.tilesize+16,null);
-		drawHitbox(g2);
+//		drawHitbox(g2);
 		
 	}
 }
