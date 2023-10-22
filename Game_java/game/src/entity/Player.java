@@ -9,10 +9,9 @@ import main.GamePanel;
 import main.KeyHandler;
 import static util.constant.Confix.*;
 public class Player extends Entity{
-	
 	private boolean isDashing = false;
     private long lastDashTime = 0;
-    private long dashCooldown = 1000;
+    private final long dashCooldown = 1000;
 	GamePanel gp;
 	KeyHandler keyH;
 	public int hasStar = 0;
@@ -63,48 +62,45 @@ public class Player extends Entity{
 	public void update() {
 		int X=0;
 		int Y=0;
-		if(keyH.upPressed == true || keyH.downPressed == true || 
-				keyH.leftPressed == true || keyH.rightPressed == true) {
-			if(keyH.upPressed == true) {
+
+		gp.cChecker.checkTile(this);
+		if(keyH.upPressed || keyH.downPressed ||
+				keyH.leftPressed || keyH.rightPressed) {
+			if(keyH.upPressed && !isCollisionUp) {
 				direction = "up";
 				Y -= speed;
-				if(imagedirection=="stayL") {
+				if("stayL".equals(imagedirection)) {
 					imagedirection = "left";
 				}
-				if(imagedirection=="stayR") {
+				if("stayR".equals(imagedirection)) {
 					imagedirection = "right";
 				}
 				
 			}
-			if(keyH.downPressed == true) {
+			if(keyH.downPressed && !isCollisionDown) {
 				direction = "down";
 				Y += speed;
-				if(imagedirection=="stayL") {
+				if("stayL".equals(imagedirection)) {
 					imagedirection = "left";
 				}
-				if(imagedirection=="stayR") {
+				if("stayR".equals(imagedirection)) {
 					imagedirection = "right";
 				}
 				
 			}
-			if(keyH.leftPressed == true) {
+			if(keyH.leftPressed && !isCollisionLeft) {
 				direction = "left";
 				X -= speed;
 				imagedirection = "left";
 				
 			}
-			if(keyH.rightPressed == true) {
+			if(keyH.rightPressed && !isCollisionRight) {
 				direction = "right";
 				X += speed;
 				imagedirection = "right";
 				
 			}
-//			if(keyH.shiftPressed == true) {
-//				speed=20;
-//			}
-//			if(keyH.shiftPressed == false) {
-//				speed=10;
-//			}
+
 			if (keyH.shiftPressed && !isDashing && (System.currentTimeMillis() - lastDashTime) >= dashCooldown) {
 	            isDashing = true;
 	            lastDashTime = System.currentTimeMillis();
@@ -119,19 +115,15 @@ public class Player extends Entity{
 	            isDashing = false;
 	            speed = 6; // Reset the speed after dashing cooldown
 	        }
-			
-			collisionOn = false;
-			gp.cChecker.checkTile(this);
+
 			boolean objBool = gp.cChecker.checkObject(this,true);
 			if(objBool) {
 				pickStar();
 			}
 			//if collision is false can move
-			if(collisionOn == false) {
-				x += X;
-				y += Y;
-			}
-			
+			x += X;
+			y += Y;
+
 			spriteCounter++;
 			if(spriteCounter > 10) {
 				if(spriteNum == 1) {
