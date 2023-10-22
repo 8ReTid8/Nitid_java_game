@@ -19,7 +19,6 @@ public class Entity  {
 
 	public int solidAreaDefaultX,solidAreaDefaultY;
 	public boolean collisionOn = false;
-	public boolean isCollisionUp, isCollisionDown, isCollisionLeft, isCollisionRight;
 	
 //	public Entity(GamePanel)
 }
