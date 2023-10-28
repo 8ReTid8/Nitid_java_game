@@ -1,10 +1,11 @@
 package entity;
 
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
-public class Entity  {
+public abstract class Entity  {
 	public int x,y;
 	public int speed;
 	
@@ -21,5 +22,7 @@ public class Entity  {
 	public boolean collisionOn = false;
 	public boolean isCollisionUp, isCollisionDown, isCollisionLeft, isCollisionRight;
 	
-//	public Entity(GamePanel)
+	public abstract void update();
+	public abstract void draw(Graphics2D g2);
+	public abstract void setDefaultValues();
 }

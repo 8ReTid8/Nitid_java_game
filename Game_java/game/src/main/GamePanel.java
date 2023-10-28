@@ -71,7 +71,6 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	
 	public void setStar() {
-//		aSetter.setObject();
 		obj = new OBJ_Key(this);
 	}
 	
@@ -112,6 +111,7 @@ public class GamePanel extends JPanel implements Runnable{
 //		}
 //		
 //	}
+
 	public void run() {
 		
 		double drawInterval = 1000000000/FPS;
@@ -142,7 +142,7 @@ public class GamePanel extends JPanel implements Runnable{
 		}
 		
 	}
-	
+
 	public void update() {
 		if(gamestate == playstate) {
 			player.update();
