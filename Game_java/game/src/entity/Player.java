@@ -64,8 +64,7 @@ public class Player extends Entity{
 		int Y=0;
 
 		gp.cChecker.checkTile(this);
-		if(keyH.upPressed || keyH.downPressed ||
-				keyH.leftPressed || keyH.rightPressed) {
+		if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
 			if(keyH.upPressed && !isCollisionUp) {
 				direction = "up";
 				Y -= speed;
